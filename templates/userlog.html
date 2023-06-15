@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Project Title</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.js" integrity="sha512-o4gKX6jcK0rdciOZ9X8COYkV9gviTJAbYEVW8aC3OgIRuaKDmcT9/OFXBVzHSSOxiTjsTktqrUvCUrHkQHSn9Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    body{
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz7gqqS37HYxTuIUOGWeNbqklmsiedpIi5ldt5ehQrkQ&usqp=CAU&ec=48665698');
+      background-repeat: no-repeat;
+      background-size: 100% 100vh;
+      background-attachment: fixed;
+    }
+    #form1, #form2, #form3{
+      width: 80%;
+      margin: auto;
+      padding: 25px 50px;
+      background-color: rgba(0, 0, 0, 0.80);
+      margin-top: 50px !important;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" data-value="#form1" onclick="toggleform(event)">WebSiteName</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+            <div class="container" id="page">
+
+                {% if msg %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{msg}}</strong> 
+                  </div>
+                {% endif %}
+
+                
+                {% if msg1 %}
+                <div class="row" id="form1">
+                    <center><h3>CANDIDATE LIST</h3></center>
+                        <hr>
+                    <div class="col-lg-4">
+                                <div class="row" id="profile">
+                                    <div class="col-lg-4">
+                                        <img src="http://127.0.0.1:5000/static/paramanand.jpg" style="width:100%;border-radius: 50%;">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <table>
+                                            <tr>
+                                                <th>Name</th>
+                                                <td>paramanand</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Party</th>
+                                                <td>BJP</td>
+                                            </tr>
+                                        </table>
+                                        {% set party = 'bjp' %}
+                                        <a href="{{ url_for('vote', party=party)}}"><button class="btn btn-success">Vote</button></a>
+                                    </div>
+                                </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="row" id="profile">
+                            <div class="col-lg-4">
+                                <img src="http://127.0.0.1:5000/static/paramanand.jpg" style="width:100%;border-radius: 50%;">
+                            </div>
+                            <div class="col-lg-8">
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>paramanand</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Party</th>
+                                        <td>Congress</td>
+                                    </tr>
+                                </table>
+                                {% set party = 'congress' %}
+                                <a href="{{ url_for('vote', party=party)}}"><button class="btn btn-success">Vote</button></a>
+                            </div>
+                        </div>
+                   
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="row" id="profile">
+                            <div class="col-lg-4">
+                                <img src="http://127.0.0.1:5000/static/paramanand.jpg" style="width:100%;border-radius: 50%;">
+                            </div>
+                            <div class="col-lg-8">
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>paramanand</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Party</th>
+                                        <td>JDS</td>
+                                    </tr>
+                                </table>
+                                {% set party = 'jds' %}
+                                <a href="{{ url_for('vote', party=party)}}"><button class="btn btn-success">Vote</button></a>
+                            </div>
+                        </div>
+                   
+                    </div>
+                </div>
+                {% else %}
+                <form action="/verification" method="post" id="form1">
+                    <center><h3>OTP VERIFICATION</h3></center>
+                <div class="form-group">
+                    <label for="otp">Otp:</label><br>
+                    <input type="text" class="form-control" id="otp" name="otp" placeholder="enter otp" style="width: 40%;" required>
+                    <input type="button" class="btn btn-success" id="getotp" value="get otp">
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+                {% endif %}
+            </div>
+
+            <script>
+                   $(document).ready(function() {
+                    $("#getotp").on("click",function(e){
+                        $.ajax({
+                            url:"/getotp",
+                            success:function(res){
+                                console.log(res);
+                            }
+                        });
+                    });
+                });
+            </script>
+    </body>
+</html>
