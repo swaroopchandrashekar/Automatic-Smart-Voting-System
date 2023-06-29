@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Project Title</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.js" integrity="sha512-o4gKX6jcK0rdciOZ9X8COYkV9gviTJAbYEVW8aC3OgIRuaKDmcT9/OFXBVzHSSOxiTjsTktqrUvCUrHkQHSn9Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    body{
+      background-image: url('../static/voteeee.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100vh;
+      background-attachment: fixed;
+    }
+    #form1{
+      width: 50%;
+      margin: auto;
+      padding: 25px 50px;
+      background-color: rgba(0, 0, 0, 0.80);
+      margin-top: 50px !important;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" data-value="#form1" onclick="toggleform(event)">Automatic Smart Voting System</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/add">Add user</a></li>
+        <li><a href="/Delete">Delete user</a></li>
+        <li><a href="/anounce">Display result</a></li>
+        <li><a href="/voterlist">User list</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container">
+
+  {% if msg %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{msg}}</strong> 
+                  </div>
+                {% endif %}
+
+                
+    <form  method="post" action="{{ url_for('add_user')}}" id="form1">
+      <center><h2>Add user</h2></center>
+      <hr>
+      <div class="form-group">
+        <label for="userid">user id:</label>
+        <input type="number" class="form-control" id="userid" placeholder="Enter user id" name="userid" required>
+      </div>
+      <div class="form-group">
+        <label for="voterid">voter id:</label>
+        <input type="text" class="form-control" id="voterid" pattern="[0-9]{6}" 
+       title="enter 6 digit voter id" placeholder="Enter voter id" name="voterid" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="phone" class="form-control" id="phone" pattern="[7-9]{1}[0-9]{9}" 
+       title="Phone number with 7-9 and remaing 9 digit with 0-9" placeholder="Enter phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="address">address:</label>
+        <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" required>
+      </div>
+      <div class="form-group">
+        <label for="otp">Otp:</label><br>
+        <input type="text" class="form-control" id="otp" name="otp" placeholder="enter otp" style="width: 40%;" required>
+        <input type="button" class="btn btn-success" id="getotp" value="get otp">
+    </div>
+      <button type="submit" class="btn btn-success">Submit</button></br></br>
+    </form>
+
+  
+</div>
+
+<script>
+     $(document).ready(function() {
+                    $("#getotp").on("click",function(e){
+                        $.ajax({
+                            url:"/getotp",
+                            success:function(res){
+                                console.log(res);
+                            }
+                        });
+                    });
+                });
+</script>
+</body>
+</html>
